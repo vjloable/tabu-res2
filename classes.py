@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 """
 Created on Tue Jan 28 12:45:18 2020
+
 @author: Tristan
 """
 #import smth
@@ -12,16 +13,16 @@ class SubjectPeriod:    #the whole class schedule in general, what our class sch
         self.block = []
         
 class Subject:
-    def __init__(self, _name = "", _unit = "", parameters = ""):
+    def __init__(self, _name = "", _unit = "", _prefTime = ""):
         self.id = ""
         self.name = _name
         self.prefTime = [[0]*4 for i in range(8)]
         self.unit = _unit
         self.unitCounter = 0
-        prefTime = Subject.neighbors(self, parameters)
+        prefTime = Subject.neighbors(self, _prefTime)
         
-    def neighbors(self, parameters):
-        param = parameters.split("-")
+    def neighbors(self, _prefTime):
+        param = _prefTime.split("-")
         if param[0] == "" or param[1] == "" or param[2] == "":
             return [[0]*4 for i in range(8)]
         
@@ -38,19 +39,20 @@ class Subject:
                 self.prefTime[i] = [round(1/(1+(i-i1)), 2)]*4
                 
         if param[2] == "False":
+            
             for i in range(0, len(self.prefTime)):
                 for j in range(0, len(self.prefTime[i])):
                     self.prefTime[i][j] = round(1/( 1 + (abs(i1-i) + abs(i2 - j))), 2)
         
 class Teacher:
-    def __init__(self, _name = "", _parameters = ""):
+    def __init__(self, _name = "", __prefTime = ""):
         self.id = ""
         self.name = _name
         self.prefTime = [[0]*4 for i in range(8)]
-        prefTime = Teacher.neighbors(self, _parameters)
+        prefTime = Teacher.neighbors(self, __prefTime)
         
-    def neighbors(self, parameters):
-        param = parameters.split("-")
+    def neighbors(self, _prefTime):
+        param = _prefTime.split("-")
         if param[0] == "" or param[1] == "" or param[2] == "":
             return [[0]*4 for i in range(8)]
         
@@ -67,6 +69,7 @@ class Teacher:
                 self.prefTime[i] = [round(1/(1+(i-i1)), 2)]*4
                 
         if param[2] == "False":
+            
             for i in range(0, len(self.prefTime)):
                 for j in range(0, len(self.prefTime[i])):
                     self.prefTime[i][j] = round(1/( 1 + (abs(i1-i) + abs(i2 - j))), 2)
